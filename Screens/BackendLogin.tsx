@@ -1,34 +1,31 @@
 
 import { View, TextInput, TouchableOpacity, Text ,ToastAndroid } from 'react-native'
 import rncStyles from 'rncstyles'
-import auth from "@react-native-firebase/auth"
 import { useState } from 'react'
-import database from "@react-native-firebase/database"
+import axios from 'axios'
 
-export default function Login({ navigation }: any) {
+
+export default function BackendLogin({ navigation }: any) {
 
     const [model, setModel] = useState<any>({})
 
     const noAcc = () => {
-        navigation.navigate("Signup" ,)
+        navigation.navigate("Signup" )
     }
-    // const Todoapp = () => {
-    //     navigation.navigate("Task")
-    // }
+   
 
-    const LoginUser = () => {
-        auth().signInWithEmailAndPassword(model.email, model.password).then((res) => {
-            let id = res.user.uid
-            database().ref(`users/${id}`).on('value', (data) => {
-                let user = data.val()
-                console.log(user);
-                ToastAndroid.show(`Welcome to Our Home Page`, ToastAndroid.SHORT)
-                navigation.navigate("Home", {user})
-            })
-        }).catch((err) => {
-            ToastAndroid.show(`invalid Email and Password ${err}`, ToastAndroid.SHORT)
-        })
-    }
+    const Login = async () => {
+        try {
+            const response = await axios.post("http://192.168.100.109:5000/auth/Login", model);
+            const token = response.data.data.token;
+            console.log(response.data);
+            navigation.navigate("ApiRoutes", { token });
+            ToastAndroid.show("Login Successfully",ToastAndroid.SHORT)
+        } catch (error) {
+            console.error("Login failed:", error);
+        }
+    };
+    
 
     return <>
         <View
@@ -60,6 +57,26 @@ export default function Login({ navigation }: any) {
                     >Please Sign in to continue.</Text>
                 </View>
                 <View>
+                <View
+                        style={rncStyles.pb1}>
+                        <Text
+                            style={[
+                                rncStyles.textPrimary,
+                                rncStyles.p1
+                            ]}
+                        >userName</Text>
+                        <TextInput value={model.userName}
+                         onChangeText={(e) => setModel({ ...model, userName: e })}
+                            style={[
+                                rncStyles.input,
+                                rncStyles.bgWhite,
+                                rncStyles.rounded,
+                                rncStyles.border1,
+                                rncStyles.borderPrimary
+                            ]}
+                            placeholder='example@abc.com'
+                        />
+                    </View>
                     <View
                         style={rncStyles.pb1}>
                         <Text
@@ -118,7 +135,7 @@ export default function Login({ navigation }: any) {
                         style={rncStyles.py2}
                     >
                         <TouchableOpacity
-                            onPress={LoginUser}
+                            onPress={Login}
                             style={[
                                 rncStyles.btnPrimary,
                                 rncStyles.rounded
@@ -159,33 +176,6 @@ export default function Login({ navigation }: any) {
                         >Sign Up</Text>
                     </TouchableOpacity>
                 </View>
-
-
-                {/* <View
-                    style={[
-                        rncStyles.py2,
-                        rncStyles.flexRow,
-                        rncStyles.justifyContentCenter
-                    ]}
-                >
-                    <Text
-                        style={[
-                            rncStyles.textBold,
-                            rncStyles.textSecondary,
-                            rncStyles.fs5
-                        ]}
-                    >Go to The TodoApp</Text>
-                    <TouchableOpacity onPress={Todoapp}>
-                        <Text
-                            style={[
-                                rncStyles.textBold,
-                                rncStyles.fs5,
-                                rncStyles.ms1,
-                                rncStyles.textPrimary
-                            ]}
-                        >TodoApp</Text>
-                    </TouchableOpacity>
-                </View> */}
             </View>
         </View>
     </>

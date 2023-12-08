@@ -84,6 +84,7 @@ const noAcc = () => {
                             placeholder="eg. Muhammad Zaid"
                         />
                     </View>
+              
                     <View style={rncStyles.pb1}>
                         <Text style={[rncStyles.textPrimary, rncStyles.p1]}>Email</Text>
                         <TextInput
