@@ -1,187 +1,152 @@
-import { View, TextInput, TouchableOpacity, Text, ToastAndroid } from 'react-native';
-import rncStyles from 'rncstyles';
+import { View, TextInput, TouchableOpacity, Text, ScrollView, ToastAndroid } from 'react-native'
+import rncStyles from 'rncstyles'
 import { useState } from 'react';
 import axios from 'axios';
 
-export default function BackendLogin({ navigation }: any) {
-  const [model, setModel] = useState<any>({});
-  const noAcc = () => {
-    navigation.navigate("Signup");
-  };
 
-  const Login = async () => {
+export default function BackendSignup({ navigation }: any) {
+
+    const [model, setModel] = useState<any>({})
+
+
+
+const signupUser = async () => {
     try {
-      const response = await axios.post("http://192.168.100.109:5000/auth/Login", model);
-      const token = response.data.data.token;
+      const response = await axios.post("http://192.168.100.159:5000/auth/signup", model);
       console.log(response.data);
-      navigation.navigate("ApiRoutes", { token });
-      ToastAndroid.show("Login Successfully", ToastAndroid.SHORT);
-    } catch (error : any) {
-      console.error("Login failed:", error);
-      if (error.response && error.response.status === 401) {
-        console.log("Invalid token. Please log in again.");
-      } else {
-        console.error("Unexpected error:", error);
-      }
+    navigation.navigate("Backend Login")
+    } catch (error: any) {
+      console.log("Signup failed:", error.response.data);
     }
   };
 
-  return (
-    <View
-      style={[
-        rncStyles.h100,
-        rncStyles.bgWhite
-      ]}
-    >
-      <View
-        style={[
-          rncStyles.h100,
-          rncStyles.p2,
-          rncStyles.justifyContentCenter
-        ]}
-      >
+    
+
+    return <>
         <View
-          style={rncStyles.py5}
-        >
-          <Text
             style={[
-              rncStyles.fs1,
-              rncStyles.textPrimary,
-              rncStyles.textBold,
-              rncStyles.mb1
-            ]}
-          >Login</Text>
-          <Text
-            style={[
-              rncStyles.fs5,
-              rncStyles.textSecondary
-            ]}
-          >Please Sign in to continue.</Text>
-        </View>
-        <View>
-          <View
-            style={rncStyles.pb1}
-          >
-            <Text
-              style={[
-                rncStyles.textPrimary,
-                rncStyles.p1
-              ]}
-            >userName</Text>
-            <TextInput value={model.userName}
-              onChangeText={(e) => setModel({ ...model, userName: e })}
-              style={[
-                rncStyles.input,
-                rncStyles.bgWhite,
-                rncStyles.rounded,
-                rncStyles.border1,
-                rncStyles.borderPrimary
-              ]}
-              placeholder='example@abc.com'
-            />
-          </View>
-          <View
-            style={rncStyles.pb1}
-          >
-            <Text
-              style={[
-                rncStyles.textPrimary,
-                rncStyles.p1
-              ]}
-            >Email</Text>
-            <TextInput value={model.email}
-              onChangeText={(e) => setModel({ ...model, email: e })}
-              style={[
-                rncStyles.input,
-                rncStyles.bgWhite,
-                rncStyles.rounded,
-                rncStyles.border1,
-                rncStyles.borderPrimary
-              ]}
-              placeholder='example@abc.com'
-            />
-          </View>
-          <View
-            style={rncStyles.pb1}
-          >
-            <Text
-              style={[
-                rncStyles.textPrimary,
-                rncStyles.p1
-              ]}
-            >Password</Text>
-            <TextInput value={model.password}
-              onChangeText={(e) => setModel({ ...model, password: e })}
-              style={[
-                rncStyles.input,
-                rncStyles.bgWhite,
-                rncStyles.rounded,
-                rncStyles.border1,
-                rncStyles.borderPrimary
-              ]}
-              placeholder='Enter Password atleast 6 characters'
-            />
-          </View>
-          <View
-            style={rncStyles.py1}
-          >
-            <TouchableOpacity>
-              <Text
+                rncStyles.h100,
+                rncStyles.bgWhite
+            ]}>
+            <View
                 style={[
-                  rncStyles.textPrimary,
-                  rncStyles.textBold,
-                  rncStyles.fs5,
-                  rncStyles.textEnd
-                ]}
-              >Forgot Password?</Text>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={rncStyles.py2}
-          >
-            <TouchableOpacity
-              onPress={Login}
-              style={[
-                rncStyles.btnPrimary,
-                rncStyles.rounded
-              ]}
-            >
-              <Text
-                style={[
-                  rncStyles.fs5,
-                  rncStyles.textWhite,
-                  rncStyles.textCenter
-                ]}
-              >Login</Text>
-            </TouchableOpacity>
-          </View>
+                    rncStyles.h100,
+                    rncStyles.p2,
+                    rncStyles.justifyContentCenter
+                ]}>
+                <View
+                    style={rncStyles.py5}>
+                    <Text
+                        style={[
+                            rncStyles.fs1,
+                            rncStyles.textPrimary,
+                            rncStyles.textBold,
+                            rncStyles.mb1
+                        ]}
+                    >Sign Up</Text>
+                    <Text
+                        style={[
+                            rncStyles.fs5,
+                            rncStyles.textSecondary
+                        ]}
+                    >Please Enter Your Information and create Acount.</Text>
+                </View>
+                <ScrollView>
+                    <View style={rncStyles.pb1}>
+                        <Text style={[rncStyles.textPrimary, rncStyles.p1]}>User Name</Text>
+                        <TextInput
+                            value={model.userName}
+                            onChangeText={(e) => setModel({ ...model, userName: e })}
+                            style={[
+                                rncStyles.input,
+                                rncStyles.bgWhite,
+                                rncStyles.rounded,
+                                rncStyles.border1,
+                                rncStyles.borderPrimary,
+                            ]}
+                            placeholder="eg. Muhammad Zaid"
+                        />
+                    </View>
+              
+                    <View style={rncStyles.pb1}>
+                        <Text style={[rncStyles.textPrimary, rncStyles.p1]}>Email</Text>
+                        <TextInput
+                            value={model.email}
+                            onChangeText={(e) => setModel({ ...model, email: e })}
+                            keyboardType="email-address"
+                            style={[
+                                rncStyles.input,
+                                rncStyles.bgWhite,
+                                rncStyles.rounded,
+                                rncStyles.border1,
+                                rncStyles.borderPrimary,
+                            ]}
+                            placeholder="example@abc.com"
+                        />
+                    </View>
+                    <View style={rncStyles.pb1}>
+                        <Text style={[rncStyles.textPrimary, rncStyles.p1]}>Password</Text>
+                        <TextInput
+                            value={model.password}
+                            onChangeText={(e) => setModel({ ...model, password: e })}
+                            secureTextEntry={true}
+                            style={[
+                                rncStyles.input,
+                                rncStyles.bgWhite,
+                                rncStyles.rounded,
+                                rncStyles.border1,
+                                rncStyles.borderPrimary,
+                            ]}
+                            placeholder="Enter Password at least 6 characters"
+                        />
+                    </View>
+                    <View
+                        style={rncStyles.py2}
+                    >
+                        <TouchableOpacity
+                            onPress={signupUser}
+                            style={[
+                                rncStyles.btnPrimary,
+                                rncStyles.rounded
+                            ]}
+                        >
+                            <Text
+                                style={[
+                                    rncStyles.fs5,
+                                    rncStyles.textWhite,
+                                    rncStyles.textCenter
+                                ]}
+                            >Sign Up</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+                <View
+                    style={[
+                        rncStyles.py2,
+                        rncStyles.flexRow,
+                        rncStyles.justifyContentCenter
+                    ]}
+                >
+                    <Text
+                        style={[
+                            rncStyles.textBold,
+                            rncStyles.textSecondary,
+                            rncStyles.fs5
+                        ]}
+                    >Have an Account?</Text>
+                    <TouchableOpacity onPress={()=> {navigation.navigate("Backend Login")}} >
+                        <Text
+                            style={[
+                                rncStyles.textBold,
+                                rncStyles.fs5,
+                                rncStyles.ms1,
+                                rncStyles.textPrimary
+                            ]}
+                        >Login</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </View>
-        <View
-          style={[
-            rncStyles.py2,
-            rncStyles.flexRow,
-            rncStyles.justifyContentCenter
-          ]}
-        >
-          <Text
-            style={[
-              rncStyles.textBold,
-              rncStyles.textSecondary,
-              rncStyles.fs5
-            ]}
-          >Not Registerar yet?</Text>
-          <TouchableOpacity onPress={noAcc}>
-            <Text
-              style={[
-                rncStyles.textBold,
-                rncStyles.fs5,
-                rncStyles.ms1,
-                rncStyles.textPrimary
-              ]}
-            >Sign Up</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
-  );
+    </>
 }
+

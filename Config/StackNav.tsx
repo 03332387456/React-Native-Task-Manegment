@@ -11,10 +11,9 @@ import CreateTask from '../Screens/CreateTask';
 import MyTasks from '../Screens/Task';
 import SingleTask from '../Screens/SingleTask';
 import Profile from '../Screens/Profile';
-import ApiRoutes from '../Screens/ApiRoutes';
-import BackendLogin from '../Screens/BackendLogin';
 import BackendSignup from '../Screens/BackendSignup';
-
+import BackendLogin from '../Screens/BackendLogin';
+import ApiRoutes from '../Screens/ApiRoutes';
 
 
 const Stack = createNativeStackNavigator();
@@ -25,8 +24,8 @@ function StackNav() {
       <Stack.Navigator>
         <Stack.Screen name="Backend Signup" component={BackendSignup} />
         <Stack.Screen name="Backend Login" component={BackendLogin} />
-        <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="ApiRoutes" component={ApiRoutes} />
+        <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Signup" component={SignUp} />
         <Stack.Screen name="Your Profile" component={Profile} />
         <Stack.Screen name="CreateTask" component={CreateTask} />

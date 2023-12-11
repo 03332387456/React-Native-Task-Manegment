@@ -1,4 +1,3 @@
-
 import { View, TextInput, TouchableOpacity, Text ,ToastAndroid } from 'react-native'
 import rncStyles from 'rncstyles'
 import { useState } from 'react'
@@ -16,7 +15,7 @@ export default function BackendLogin({ navigation }: any) {
 
     const Login = async () => {
         try {
-            const response = await axios.post("http://192.168.100.109:5000/auth/Login", model);
+            const response = await axios.post("http://192.168.100.159:5000/auth/Login", model);
             const token = response.data.data.token;
             console.log(response.data);
             navigation.navigate("ApiRoutes", { token });
@@ -180,4 +179,3 @@ export default function BackendLogin({ navigation }: any) {
         </View>
     </>
 }
-

@@ -23,7 +23,7 @@ export default function Login({ navigation }: any) {
                 let user = data.val()
                 console.log(user);
                 ToastAndroid.show(`Welcome to Our Home Page`, ToastAndroid.SHORT)
-                navigation.navigate("ApiRoutes", {user})
+                navigation.navigate("Home", {user})
             })
         }).catch((err) => {
             ToastAndroid.show(`invalid Email and Password ${err}`, ToastAndroid.SHORT)
